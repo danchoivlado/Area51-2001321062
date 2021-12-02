@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Area51
@@ -54,6 +55,19 @@ namespace Area51
             }, elevator);
 
 
+            List<Thread> studentThreads = new List<Thread>();
+                var agent1 = new Agent($"Alfredo",confidential, @base);
+            var agent2 = new Agent($"Mernando", secret, @base);
+            var agent3 = new Agent($"Almir", top_secret, @base);
+            var thread1 = new Thread(agent1.InvadeBuilding);
+            var thread2 = new Thread(agent2.InvadeBuilding);
+            var thread3 = new Thread(agent3.InvadeBuilding);
+            thread1.Start();
+            thread2.Start();
+            thread3.Start();
+            studentThreads.AddRange(new List<Thread>() { thread1,thread3});
+
+            foreach (var t in studentThreads) t.Join();
         }
     }
 }
